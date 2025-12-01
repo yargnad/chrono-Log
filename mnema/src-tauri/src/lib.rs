@@ -130,7 +130,7 @@ async fn add_memory(table: &Table, id: String, timestamp: String, path: String, 
 
 // --- MAIN LOOP ---
 async fn start_screen_capture_loop(app_handle: tauri::AppHandle, app_dir: PathBuf, mut session: Session, table: Table) {
-    println!("DEBUG: Starting ChronoLog Memory Core...");
+    println!("DEBUG: Starting Mnemosyne Memory Core...");
     let images_dir = app_dir.join("snapshots");
     if !images_dir.exists() { let _ = fs::create_dir_all(&images_dir); }
 
@@ -281,7 +281,7 @@ async fn search_memories(state: tauri::State<'_, Mutex<AppState>>, query: String
 // --- RUN ENTRY POINT ---
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    ort::init().with_name("ChronoLog").commit().expect("Failed to init ONNX");
+    ort::init().with_name("Mnema").commit().expect("Failed to init ONNX");
 
     tauri::Builder::default()
         .manage(Mutex::new(AppState { 

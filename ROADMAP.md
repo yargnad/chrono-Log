@@ -1,4 +1,4 @@
-# ChronoLog Roadmap
+# Mnema Roadmap
 
 Last updated: **2025-12-01**
 
@@ -10,14 +10,14 @@ Last updated: **2025-12-01**
 
 ***
 
-## Phase 1 — Recall Desk (🚧 In Progress)
+## Phase 1 — Mnemosyne Retrieval Desk (🚧 In Progress)
 
 ### Goals
 
-- **Persistent Recall UI:** Live preview docked left, vertical carousel for search results, floating detail pane, fullscreen modal.
+- **Persistent Mnemosyne UI:** Live preview docked left, vertical carousel for search results, floating detail pane, fullscreen modal.
 - **On-Device OCR & Interaction:** **Interactive, coordinate-based** OCR via Microsoft TrOCR + SentencePiece, supporting a clickable **Meta-Car** for links, files, and key phrases.
 - **File Version Snapshot:** **Cryptographic content hashing** of active files (using segmented hashing for large files) to link memory records to the precise version of a file.
-- **Privacy Overlays:** Blur faces in thumbnails by default with an "uncloak" toggle.
+- **Xechno Privacy Protocol:** Blur faces in thumbnails by default with an "uncloak" toggle plus pause alerts when content blocks persistence.
 
 ### Status
 
@@ -27,8 +27,8 @@ Last updated: **2025-12-01**
 - ⬜ **Update LanceDB schema** to store `file_hash` and `file_path` in memory records.
 - ⬜ **Implement OCR & Bounding Box Logic** using the lightweight YuNet ONNX detector (running via DirectML) combined with TrOCR to return `(x, y, w, h)` coordinates.
 - ⬜ Implement OCR + caching command (`ocr_memory`).
-- ⬜ Add face-detection helper and thumbnail blur toggle.
-- ⬜ Ship new carousel/details UI and hook up OCR/blur interactions.
+- ⬜ Add face-detection helper, thumbnail blur toggle, and Xechno pause event.
+- ⬜ Ship new Mnemosyne carousel/details UI and hook up OCR/blur interactions.
 
 ***
 
@@ -36,7 +36,7 @@ Last updated: **2025-12-01**
 
 - **Scriptable Overlay APIs** so collaborators can create widgets/agents atop the feed.
 - Custom workflows (alerts, journaling, tagging, automations).
-- Documentation + SDK samples for extending ChronoLog locally.
+- Documentation + SDK samples for extending Mnema locally.
 
 ***
 
@@ -49,7 +49,7 @@ Last updated: **2025-12-01**
     
 ---
 
-# Phase 1 — Recall Desk: Detailed Goal Breakdown
+## Phase 1 — Mnemosyne Retrieval Desk: Detailed Goal Breakdown
 
 The following is a detailed breakdown of the four primary goals for Phase 1, outlining the required technical steps for both the Rust Backend and the JavaScript Frontend.
 

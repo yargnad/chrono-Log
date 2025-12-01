@@ -13,7 +13,7 @@ async function startListener() {
     await listen('new-screenshot', (event) => {
         imgEl.src = event.payload;
         frameCount++;
-        statusEl.textContent = `Receiving Stream | Frames Processed: ${frameCount}`;
+        statusEl.textContent = `Mnemosyne Stream | Frames Processed: ${frameCount}`;
     });
 }
 
@@ -23,13 +23,13 @@ async function search(query) {
 
     // Reset UI
     resultsContainer.innerHTML = ''; 
-    statusEl.textContent = `Searching for: "${query}"...`;
+    statusEl.textContent = `Mnemosyne is searching for "${query}"...`;
     
     // Call the Rust function
     try {
         const results = await window.__TAURI__.core.invoke('search_memories', { query }); 
 
-        statusEl.textContent = `Search complete. Found ${results.length} memories!`;
+        statusEl.textContent = `Search complete. Found ${results.length} memories.`;
         
         // Render Results
         if (results.length > 0) {
@@ -52,7 +52,7 @@ async function search(query) {
 
         // Auto-close search area after 5 seconds of display
         setTimeout(() => {
-            statusEl.textContent = `Receiving Stream | Frames Processed: ${frameCount}`;
+            statusEl.textContent = `Mnemosyne Stream | Frames Processed: ${frameCount}`;
             resultsContainer.innerHTML = '';
         }, 5000);
 
@@ -76,5 +76,5 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     // Example of a helpful utility function (Needs new Tauri permissions)
-    // getCurrent().setTitle('ChronoLog (Ready to Serve The Rebellion)');
+    // getCurrent().setTitle('Mnema · Ready to Serve the Rebellion');
 });

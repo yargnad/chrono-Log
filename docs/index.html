@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="Mnema, Mnemosyne, Local-First, Recall Agent, Privacy-First, Semantic Search, LanceDB, CLIP Embeddings, Tauri, Rust, DirectML, ONNX Runtime, OCR, Face Blur, Human-Centric Tooling, Authentic Rebellion Framework" />
+  <title>Mnema · Local-First Recall Agent</title>
+  <meta name="description" content="Mnema is a privacy-first recall agent for Windows that captures your screen locally, stores embeddings in LanceDB, and delivers semantic search without the cloud." />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Mnema</div>
+      <div class="nav-links">
+        <a href="#vision">Vision</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#join">Get Involved</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Local Recall for People Who Refuse Surveillance</h1>
+        <p>
+          Mnema is a Tauri + Rust desktop agent that continuously captures your screen, embeds it with CLIP, and stores every trace in an on-device LanceDB. Search is semantic, privacy is absolute, and the interface is built for scripting your own rebellion.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://github.com/yargnad/mnema" target="_blank" rel="noopener">View on GitHub ↗</a>
+          <a class="btn btn-secondary" href="#roadmap">Explore Roadmap</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision">
+      <div class="container">
+        <h2 class="section-heading">Why Mnema Exists</h2>
+        <p class="section-intro">
+          We reject captive recall products that siphon data to corporate clouds. Mnema is the antidote: offline, scriptable, and aligned with The Authentic Rebellion Framework's demand for human dignity.
+        </p>
+        <div class="grid grid-3">
+          <div class="card">
+            <span class="badge">Privacy</span>
+            <h3>Everything stays local</h3>
+            <p>No telemetry, no network calls, no API keys. Screenshots, vectors, OCR text, and hashes never leave your hardware.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Agency</span>
+            <h3>Hackable overlay</h3>
+            <p>Tauri frontend exposes events and commands so you can wire automations—launch playlists when VS Code appears, fire prompts when a meeting starts, or export a daily digest.</p>
+          </div>
+          <div class="card">
+            <span class="badge">Human Flourishing</span>
+            <h3>Memory with consent</h3>
+            <p>Mnema honors human context: blurred faces by default, cached OCR for quick redaction, and file-version fingerprints so collaboration remains accountable.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="capabilities">
+      <div class="container">
+        <h2 class="section-heading">Current Capabilities</h2>
+        <p class="section-intro">Shipping today on Windows 11 (DirectML-enabled).</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Live Stream Monitor</h3>
+            <p>Rust capture loop emits PNG frames through Tauri events. Watch Mnema think in real time while the vector store fills up.</p>
+          </div>
+          <div class="card">
+            <h3>CLIP + LanceDB Memory</h3>
+            <p>Every snapshot is embedded via ONNX Runtime + DirectML, then persisted with LanceDB—including timestamp, file path, and soon file hashes.</p>
+          </div>
+          <div class="card">
+            <h3>Semantic Search Desk</h3>
+            <p>Ask natural language questions. Results arrive instantly and soon will anchor a persistent carousel with detail pane + fullscreen recall.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture">
+      <div class="container split">
+        <div>
+          <h2 class="section-heading">Architecture at a Glance</h2>
+          <p class="section-intro">Purpose-built for DirectML acceleration and human-readable scripting.</p>
+          <ul>
+            <li>Rust backend (Tauri) orchestrates capture, ONNX sessions, LanceDB writes, and new OCR/face-blur commands.</li>
+            <li>Frontend is plain HTML/CSS/JS so contributors can fork the UI or embed custom widgets.</li>
+            <li>TrOCR + YuNet models run locally; SentencePiece tokenizer ships with the app for offline decoding.</li>
+            <li>Thread-safe caches ensure OCR responses are instant after the first pass.</li>
+          </ul>
+        </div>
+        <div class="code-block">
+<pre><code>tauri::command
+fn ocr_memory(id: String) {
+    // 1. fetch snapshot path & timestamp
+    // 2. run YuNet detector (DirectML)
+    // 3. crop regions → TrOCR
+    // 4. classify links & emit Meta-Car items
+}
+</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="container">
+        <h2 class="section-heading">Roadmap</h2>
+        <p class="section-intro">Taken directly from <code>ROADMAP.md</code> so everyone stays aligned.</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3>Phase 0 · Pulse <span class="badge">Complete</span></h3>
+            <p>Continuous capture loop, CLIP embeddings, LanceDB persistence, and baseline semantic search shipped.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Phase 1 · Mnemosyne <span class="badge">In Progress</span></h3>
+            <ul>
+              <li>Persistent UI with carousel + fullscreen modal.</li>
+              <li>DirectML TrOCR + YuNet pipeline for coordinate-aware OCR.</li>
+              <li>BLAKE3 segmented hashing to link memories to exact file versions.</li>
+              <li>Blurred thumbnails with "Uncloak" toggle powered by <code>toggle_face_blur</code> plus the Xechno safety alert.</li>
+            </ul>
+          </div>
+          <div class="timeline-item">
+            <h3>Phase 2 · Canvas</h3>
+            <p>Scriptable overlay APIs, journaling workflows, and agent hooks so Mnema becomes a platform.</p>
+          </div>
+          <div class="timeline-item">
+            <h3>Phase 3 · Distribution</h3>
+            <p>Installers, winget distribution, and a hardened release pipeline so anyone can run Mnema safely.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy">
+      <div class="container">
+        <h2 class="section-heading">Privacy & Safety</h2>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Default Blur Pipeline</h3>
+            <p>YuNet face detection (DirectML) runs during capture, saving blurred thumbnails. Originals remain on disk and unlock only when requested.</p>
+          </div>
+          <div class="card">
+            <h3>Immutable File Fingerprints</h3>
+            <p>BLAKE3 hashes—full or segmented—link a memory to the precise file version open at capture time.</p>
+          </div>
+          <div class="card">
+            <h3>Scriptable Consent</h3>
+            <p>Because the UI is bare HTML/JS, you can inject automation that pauses capture, redacts regions, or syncs with your own rituals.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join">
+      <div class="container">
+        <h2 class="section-heading">Build With Us</h2>
+        <p class="section-intro">Mnema lives inside the Authentic Rebellion ecosystem. Contributors who resonate with privacy, local-first design, and human-centric tooling are welcome.</p>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Rust & Systems</h3>
+            <p>Help optimize capture, LanceDB schemas, OCR pipelines, and DirectML model loading.</p>
+          </div>
+          <div class="card">
+            <h3>Frontend & UX</h3>
+            <p>Design the Mnemosyne carousel, Meta-Car interactions, and scriptable overlays that empower users.</p>
+          </div>
+          <div class="card">
+            <h3>Research & Docs</h3>
+            <p>Document workflows, write guides for automations, and explore new privacy filters or heuristics.</p>
+          </div>
+        </div>
+        <div class="cta cta-spaced">
+          <a class="btn btn-primary" href="https://github.com/yargnad/mnema" target="_blank" rel="noopener">Contribute on GitHub ↗</a>
+          <a class="btn btn-secondary" href="../README.md" target="_blank" rel="noopener">Read the README</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Mnema · Part of <a href="https://rebellion.musubiaccord.org">Authentic Rebellion Framework</a> </p>
+    <p><a href="https://github.com/yargnad/mnema" target="_blank" rel="noopener">github.com/yargnad/mnema</a></p>
+  </footer>
+</body>
+</html>

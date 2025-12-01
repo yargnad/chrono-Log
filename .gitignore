@@ -4,9 +4,8 @@ node_modules/
 # Ignore ONNX model files everywhere
 *.onnx
 # Future OCR resources (directory and files)
-chronolog/src-tauri/resources/trocr-base/
-chronolog/src-tauri/resources/trocr-base/**
-chronolog/src-tauri/target/
-chronolog/src-tauri/target/**
-
-PROPOSED_CHANGES.md
+mnema/src-tauri/resources/trocr-base/
+mnema/src-tauri/resources/trocr-base/**
+mnema/src-tauri/target/
+mnema/src-tauri/target/**
+mnema/src-tauri/onnxruntime.dll

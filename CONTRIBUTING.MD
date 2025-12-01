@@ -1,6 +1,6 @@
-# Contributing to ChronoLog
+# Contributing to Mnema
 
-First off, thank you for considering contributing to ChronoLog. This project is part of *The Authentic Rebellion*, and by contributing, you are helping to build a future where technology respects human dignity and privacy.
+First off, thank you for considering contributing to Mnema. This project is part of *The Authentic Rebellion*, and by contributing, you are helping to build a future where technology respects human dignity and privacy.
 
 ## How Can I Help?
 

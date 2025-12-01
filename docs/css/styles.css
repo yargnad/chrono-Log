@@ -1,0 +1,239 @@
+/* Mnema Docs Theme */
+
+:root {
+    --bg: #050709;
+    --bg-alt: #0e1117;
+    --card: #121821;
+    --accent: #5ddcff;
+    --accent-2: #f97316;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --border: rgba(148, 163, 184, 0.2);
+    --radius: 16px;
+    --max-width: 1100px;
+    --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: radial-gradient(circle at top, #101828 0%, #020408 45%);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+a:hover {
+    opacity: 0.75;
+}
+
+section {
+    padding: 72px 20px;
+}
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    background: rgba(5, 7, 9, 0.75);
+    border-bottom: 1px solid var(--border);
+}
+
+nav {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+}
+
+.logo {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 22px;
+    font-size: 0.95rem;
+}
+
+.nav-links a {
+    color: var(--text);
+    opacity: 0.8;
+}
+
+.hero {
+    padding: 120px 20px 90px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(2.8rem, 5vw, 4rem);
+    margin-bottom: 16px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: 0 auto 24px;
+    color: var(--muted);
+}
+
+.hero .cta {
+    display: inline-flex;
+    gap: 12px;
+    margin-top: 32px;
+}
+
+.cta-spaced {
+    margin-top: 32px;
+}
+
+.btn {
+    border-radius: 999px;
+    padding: 12px 28px;
+    font-weight: 600;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--accent), #3b82f6);
+    color: #020617;
+    box-shadow: 0 10px 30px rgba(93, 220, 255, 0.35);
+}
+
+.btn-secondary {
+    border-color: rgba(148, 163, 184, 0.35);
+    color: var(--text);
+}
+
+.section-heading {
+    font-size: 2.3rem;
+    margin-bottom: 12px;
+}
+
+.section-intro {
+    color: var(--muted);
+    margin-bottom: 36px;
+    max-width: 680px;
+}
+
+.grid {
+    display: grid;
+    gap: 24px;
+}
+
+.grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    margin-bottom: 12px;
+    font-size: 1.25rem;
+}
+
+.badge {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin-bottom: 12px;
+    display: inline-block;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 24px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(148, 163, 184, 0.4);
+}
+
+.timeline-item {
+    position: relative;
+    padding: 18px 0 18px 16px;
+}
+
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -11px;
+    top: 24px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-2);
+}
+
+.split {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+    align-items: center;
+}
+
+.code-block {
+    background: #0b1220;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 24px;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow);
+}
+
+footer {
+    padding: 60px 20px 40px;
+    text-align: center;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: rgba(5, 7, 9, 0.65);
+}
+
+@media (max-width: 700px) {
+    nav {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .hero .cta {
+        flex-direction: column;
+    }
+}
