@@ -5,6 +5,9 @@ node_modules/
 chronolog/src-tauri/resources/clip-vision.onnx
 chronolog/src-tauri/resources/resnet50-v2-7.onnx
 chronolog/src-tauri/resources/clip-text.onnx
+# Future OCR resources (directory and files)
+chronolog/src-tauri/resources/trocr-base/
+chronolog/src-tauri/resources/trocr-base/**
 chronolog/src-tauri/target/
 chronolog/src-tauri/target/**
 
