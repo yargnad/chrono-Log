@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChronoLog - Monitor</title>
+    <style>
+      body {
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+        font-family: monospace;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+      }
+      h1 { margin-bottom: 10px; }
+      #status { color: #888; margin-bottom: 20px; }
+      
+      /* The container for our "Recall" view */
+      #screen-container {
+        border: 2px solid #333;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        max-width: 90%;
+      }
+      
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ChronoLog v0.1</h1>
+    <div id="status">Waiting for backend stream...</div>
+    
+    <div id="screen-container">
+      <img id="monitor-view" src="" alt="Screen Capture" />
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

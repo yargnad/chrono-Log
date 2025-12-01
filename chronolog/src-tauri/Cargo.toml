@@ -1,0 +1,36 @@
+[package]
+name = "chronolog"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "chronolog_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+screenshots = "0.8"
+image = "0.24"
+base64 = "0.21"
+tokio = { version = "1", features = ["full"] }
+chrono = { version = "0.4", features = ["serde"] }
+rusqlite = { version = "0.31", features = ["bundled"] } # "bundled" means it includes C code, no external install needed
+uuid = { version = "1.8", features = ["v4", "fast-rng"] } # To give every image a unique ID
+# We enable 'load-dynamic' to let it find the DLLs on the system
+# We enable 'fetch-models' to make testing easier later
+# We use rc.10 because it compiles, and 'download-binaries' to fix the DLL crash
+ndarray = "0.16" # UPDATE THIS from 0.15
+ort = { version = "=2.0.0-rc.10", features = ["load-dynamic", "fetch-models", "download-binaries", "ndarray", "directml"] }
