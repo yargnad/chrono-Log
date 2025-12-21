@@ -1,0 +1,6 @@
+[env]
+PKG_CONFIG_PATH = "D:/Users/yargnad/pkgconfig"
+PKG_CONFIG_ALLOW_SYSTEM_LIBS = "1"
+CMAKE_POLICY_VERSION_MINIMUM = "3.5"
+CXXFLAGS = "/std:c++17"
+HOST_CXXFLAGS = "/std:c++17"
