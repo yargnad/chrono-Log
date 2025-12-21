@@ -38,3 +38,9 @@ ort = { version = "=2.0.0-rc.10", features = ["load-dynamic", "fetch-models", "d
 lancedb = "0.5.2"
 arrow = "51.0.0" 
 futures = "0.3" # Required for async database operations
+# OLD: sentencepiece = { version = "0.5", features = ["static"] }
+sentencepiece = "0.5" # NEW: Clean install without non-existent feature flag
+
+[patch.crates-io]
+sentencepiece = { path = "../../patches/sentencepiece" }
+sentencepiece-sys = { path = "../../patches/sentencepiece-sys" }

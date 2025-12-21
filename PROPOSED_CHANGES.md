@@ -6,6 +6,14 @@
 - Introduce on-device OCR using Microsoft TrOCR (base-printed ONNX) with embedded SentencePiece tokenizer.
 - Provide privacy-first face blurring and convenient link extraction so memories are safe to review and easy to navigate.
 
+## Status — December 2025
+
+- ✅ **Dependencies & State**: `sentencepiece` crate added, `AppState` holds encoder/decoder sessions, tokenizer, and in-memory OCR cache.
+- ✅ **Resource Loader**: Startup now loads TrOCR encoder + both decoder variants (`decoder_model_quantized.onnx`, `decoder_with_past_model_quantized.onnx`) plus `sentencepiece.bpe.model`, logging a warning if assets are missing.
+- ✅ **OCR Backend**: `ocr_memory` Tauri command performs greedy decoding, auto-link extraction, and cache validation against LanceDB timestamps.
+- 🚧 **UX Integration**: Carousel/detail panes still need to surface OCR text, link chips, and manual refresh actions.
+- 🚧 **Documentation**: Wider contributor docs must spell out asset downloads, pkg-config requirements, and expected command responses.
+
 ## Frontend Experience
 
 1. **Layout Refresh**
@@ -20,17 +28,41 @@
    - Display OCR text and auto-link detected URLs / file paths.
    - Include buttons for "Uncloak Faces" and "Re-run OCR" (manual override) plus copy-to-clipboard shortcuts.
 
+## Resource Checklist
+
+| Path | Required Files | Notes |
+| --- | --- | --- |
+| `mnema/src-tauri/resources/clip-vision.onnx` / `clip-text.onnx` | Already tracked in Git. | CLIP models used for capture + search. |
+| `mnema/src-tauri/resources/trocr-base/encoder_model_quantized.onnx` | Download from `microsoft/trocr-base-printed` or export via `optimum-cli`. | DirectML-friendly encoder. |
+| `mnema/src-tauri/resources/trocr-base/decoder_model_quantized.onnx` | “Decoder init” graph that seeds cache. | **New**: must be present alongside the with-past variant. |
+| `mnema/src-tauri/resources/trocr-base/decoder_with_past_model_quantized.onnx` | Incremental decoder for fast greedy decoding. | Requires cached KV tensors from the init pass. |
+| `mnema/src-tauri/resources/trocr-base/sentencepiece.bpe.model` | Tokenizer file. | Loaded through the `sentencepiece` crate. |
+
+Suggested export command (runs outside the repo):
+
+```bash
+optimum-cli export vision-encoder-decoder \
+  --model microsoft/trocr-base-printed \
+  --task vision2seq-lm \
+  --opset 17 \
+  --framework pt \
+  trocr-base
+```
+
+Copy the resulting ONNX + tokenizer files into the resource folder; keep them git-ignored per `.gitignore`.
+
+> **Build prerequisite**: Install `pkg-config` (e.g., `choco install pkgconfiglite`) so `sentencepiece-sys` can discover system libraries on Windows.
+
 ## Backend Additions
 
-1. **TrOCR Integration**
-   - Place TrOCR base ONNX weights + `spm.model` under `mnema/src-tauri/resources/trocr-base/` and ship them via `tauri.conf.json`.
-   - Add `sentencepiece` crate; extend `AppState` with `trocr_session`, `trocr_tokenizer`, and an OCR cache map keyed by memory ID.
-   - New helper flow: load PNG → preprocess to TrOCR tensor → run ONNX session (DirectML, fallback CPU) → decode tokens via SentencePiece → post-process text + links.
-2. **OCR Command**
-   - `#[tauri::command] async fn ocr_memory(id: String)`
-     - Resolve snapshot path/timestamp from LanceDB entry.
-     - Check cache; if timestamps differ, re-run OCR and refresh cache.
-     - Return `{ text, links, timestamp, refreshed }`.
+1. **TrOCR Integration** *(implemented)*
+   - Initialization now builds three DirectML sessions (encoder + two decoders) and loads the SentencePiece tokenizer into `AppState`.
+   - Helper pipeline: preprocess screenshot → encoder session → decoder init session (seeds past cache) → iterative decoder-with-past passes until EOS/PAD → SentencePiece decode → whitespace/link cleanup.
+   - `OcrCacheEntry` stores `{timestamp, text, links}` per memory ID so repeated calls short-circuit unless LanceDB reports a newer snapshot.
+2. **OCR Command Contract**
+   - `#[tauri::command] async fn ocr_memory(memory_id: String, file_path: String, timestamp: String)`
+   - Returns `OcrResult { id, timestamp, text, links, refreshed }`, where `refreshed` indicates whether the cache was updated during the call.
+   - Frontend should call this after selecting a memory card; pass through the LanceDB path/timestamp so the backend can validate freshness without another DB round-trip.
 3. **Face Privacy**
    - Introduce a lightweight face-detection model (e.g., YuNet ONNX) to find faces and generate blurred overlays by default.
    - Expose `toggle_face_blur(memory_id, enabled)` so the frontend can switch between blurred/unblurred versions on demand.
@@ -40,7 +72,7 @@
 
 ## Documentation & Tooling
 
-- Update `README.md` with setup instructions for TrOCR assets (download size, placement) and explain OCR/face-blur behavior.
+- Update `README.md` with setup instructions for TrOCR assets (download size, placement), DirectML expectations, and the `pkg-config` prerequisite. **Status:** README now covers prerequisites + asset table; extend to CONTRIBUTING next.
 - Document contribution expectations in `CONTRIBUTING.md` for working on carousel UI, OCR tuning, and privacy features.
 - Note hardware requirements (Windows 11, DirectML-capable GPU/NPU) and fallback behavior when DirectML is unavailable.
 

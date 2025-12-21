@@ -22,6 +22,7 @@ Last updated: **2025-12-01**
 ### Status
 
 - ✅ Design proposal documented in `PROPOSED_CHANGES.md` and README.
+- ✅ Desktop shell launches again via `npm run tauri dev` after rewiring SentencePiece/Abseil/Protobuf static libs.
 - ⬜ Bundle TrOCR resources + tokenizer under `src-tauri/resources`.
 - ⬜ **Implement Segmented File Hashing** (BLAKE3) for active file versions (speed-optimized).
 - ⬜ **Update LanceDB schema** to store `file_hash` and `file_path` in memory records.

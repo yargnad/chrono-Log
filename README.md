@@ -16,6 +16,7 @@ Unlike proprietary solutions that treat your data as a commodity, Mnema runs ent
 - **Vector Memory Store**: Every snapshot is embedded with CLIP and stored in LanceDB alongside timestamps and file paths for instant recall.
 - **Semantic Search UI**: Ask natural-language questions from the Mnema desktop client; results stream back immediately even while the capture loop continues.
 - **Offline-Only Pipeline**: No network calls, cloud storage, or telemetry. Models and data never leave your machine.
+- **On-Demand OCR Backend**: Microsoft TrOCR (base printed) models + SentencePiece tokenizer load at startup so the `ocr_memory` Tauri command can transcribe snapshots, cache the text, and auto-link URLs locally.
 
 ## 🔭 Near-Term Vision
 
@@ -60,6 +61,7 @@ We believe the world has become too motivated by capitalist gains at the expense
 - [Rust](https://www.rust-lang.org/tools/install) (`rustup`)
 - [Node.js](https://nodejs.org/) (LTS)
 - Microsoft C++ Build Tools (via Visual Studio Installer)
+- [`pkg-config`](https://community.chocolatey.org/packages/pkgconfiglite) (required for compiling the `sentencepiece` crate via `sentencepiece-sys`)
 
 ### Setting up the Environment
 
@@ -88,6 +90,17 @@ We believe the world has become too motivated by capitalist gains at the expense
 - Every `npm run tauri ...` call automatically runs `npm run sync-onnxruntime`, which copies the canonical DLL next to the compiled binary (and into `src-tauri/onnxruntime.dll`, which stays git-ignored).
 - If you see an error about a missing runtime DLL, run `npm run sync-onnxruntime` manually, then restart the Tauri process.
 
+### Local Model Assets
+
+Mnema keeps all model weights on-device. The repo only references these assets; you must download them separately so Git history stays lean and redistribution rules are respected.
+
+| Asset | Purpose | Location |
+| --- | --- | --- |
+| `clip-vision.onnx`, `clip-text.onnx` | CLIP vision/text encoders that generate memory embeddings and drive semantic search. | `mnema/src-tauri/resources/` (already committed, kept in sync by maintainers). |
+| `trocr-base` (folder) | Microsoft TrOCR base printed ONNX models + tokenizer for OCR. Requires three files: `encoder_model_quantized.onnx`, `decoder_model_quantized.onnx`, `decoder_with_past_model_quantized.onnx`, plus `sentencepiece.bpe.model`. | `mnema/src-tauri/resources/trocr-base/` (git-ignored; see `PROPOSED_CHANGES.md` for download commands). |
+
+After downloading the TrOCR artifacts (e.g., via the Hugging Face `microsoft/trocr-base-printed` checkpoint or `optimum-cli export vision-encoder-decoder`), drop the files into `resources/trocr-base/`. The backend logs a warning and keeps running if any file is missing, but the `ocr_memory` command will be unavailable.
+
 ## 🗺️ Roadmap
 
 - [x] **Phase 0 — Pulse**
@@ -95,7 +108,7 @@ We believe the world has become too motivated by capitalist gains at the expense
     - [x] Minimal Tauri interface with semantic search invocation.
 - [ ] **Phase 1 — Mnemosyne Retrieval Desk** *(in progress)*
     - [ ] Carousel-based results layout & fullscreen viewer.
-    - [ ] TrOCR-powered OCR command with caching + linkification.
+    - [ ] TrOCR-powered OCR command with caching + linkification *(backend complete; wiring into UI & UX polish next).*
     - [ ] Xechno protocol integration: thumbnail face-blur overlays, manual uncloaking, and pause alerts.
 - [ ] **Phase 2 — Canvas**
     - [ ] Scriptable overlay APIs, plugin surface for local agents.
